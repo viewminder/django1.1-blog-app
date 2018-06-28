@@ -39,6 +39,7 @@ def post_new_modelform(request):
     return render(request, 'blog/post_edit.html',{'form':myform})
 
 #PostForm을 사용한 등록처리
+@login_required
 def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST)
