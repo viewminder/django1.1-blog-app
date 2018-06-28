@@ -1,14 +1,16 @@
+from django import forms
 from django.db import models
-
-# Create your models here.
 from django.utils import timezone
 
+def min_length_3_validator(value):
+    if len(value) < 3:
+        raise forms.ValidationError('3글자 이상 입력해주세요.')
 
 class Post(models.Model):
     #작성자
     author = models.ForeignKey('auth.User')
     #제목
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200,validators=[min_length_3_validator])
     #내용
     text = models.TextField()
 
@@ -26,3 +28,4 @@ class Post(models.Model):
     def publish(self):
         self.published_date = timezone.now()
         self.save()
+
